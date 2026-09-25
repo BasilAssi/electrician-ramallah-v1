@@ -12,6 +12,7 @@ import { renderHtml } from '../lib/render.mjs';
 const ROOT = resolve(dirname(fileURLToPath(import.meta.url)), '../..');
 const OUT = resolve(ROOT, 'marketing/qr');
 const TARGET_URL = `${SITE_URL}/#contact`;
+const PHOTO = '../../public/images/alaa-assi-electrician-ramallah-800.webp';
 
 const C = { ink: '#14202e', paper: '#f5f2ea', volt: '#f5b700', line: '#d8d1c1' };
 const BOLT = 'M13 2 4 14h7l-1 8 9-12h-7Z';
@@ -107,7 +108,15 @@ function buildCardHtml(qrSvg) {
   h1 { margin-top: 20px; font-size: 104px; font-weight: 700; line-height: 1.2; }
   h1 .title { color: ${C.volt}; }
   .sub { margin-top: 30px; font-size: 32px; color: rgba(245,242,234,.75); }
-  .spec { position: absolute; top: 88px; left: 90px; font-size: 18px; color: rgba(245,242,234,.4); direction: ltr; }
+  .portrait {
+    position: absolute; top: 70px; left: 90px; width: 250px; height: 312px;
+    background: ${C.ink}; box-shadow: 10px 10px 0 0 rgba(245,242,234,.12); overflow: hidden;
+  }
+  .portrait img { width: 100%; height: 100%; object-fit: cover; object-position: 50% 15%; display: block; }
+  .portrait::after {
+    content: ''; position: absolute; left: 0; right: 0; bottom: 0; height: 10px;
+    background: repeating-linear-gradient(-45deg, ${C.volt} 0 12px, ${C.ink} 12px 24px);
+  }
 
   /* الكيبل الأصفر اللي بغذّي لوحة الـ QR */
   .wire { position: absolute; inset: 0; pointer-events: none; }
@@ -155,7 +164,7 @@ function buildCardHtml(qrSvg) {
     <h1><span class="title">م.</span> ${business.name.ar.replace(/^م\.\s*/, '')}</h1>
     <p class="sub">مهندس وفني كهرباء · تمديدات، صيانة، طاقة شمسية</p>
   </header>
-  <p class="spec mono">230V · 50Hz · RCD 30mA</p>
+  <div class="portrait"><img src="${PHOTO}" alt=""></div>
 
   <div class="plate">
     <span class="rating mono">QR · SCAN TO CONNECT</span>
